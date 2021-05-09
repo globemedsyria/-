@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		
+		<title>الشبكة الطبية - غلوب ميد سوريا</title>
+		<meta name="description" content="Globe Med Syria" />
+		<meta name="keywords" content="Globe Med Syria" />
+		<meta name="author" content="Eng. Essa Anid" />
+		<link rel="shortcut icon" href="assets/images/fav.ico">
+		
+		<link rel="stylesheet" type="text/css" href="assets/css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/component.css" />
+		<script src="assets/js/modernizr.custom.js"></script>
+		<script src="data/GlobeMedData.json"></script>
+		<script src="data/cities.json"></script>
+		<script src="data/providers.json"></script>
+		<script src="data/specialities.json"></script>
+		<script src="data/regions.json"></script>
+		<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+		<link href="assets/css/reset.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="assets/css/jquery-ui.css">
+		<link rel="stylesheet" href="assets/css/jquery.mapify.css">  
+		<link rel="stylesheet" href="assets/css/fastselect.css">
+		<link rel="stylesheet" href="assets/css/baloon.css" />
+		<link rel="stylesheet" href="assets/css/style.css" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body style="background: url(assets/images/bg.png) 0% 0% / cover no-repeat;    height: 100%;width: 100%;margin: 0px;padding: 0px;">
+	<div class="spinner-container">
+	<div class="spinner"></div>
+	<p style="bottom: 0px;left: 0px;position: fixed;font-size: xx-large;">الشبكة الطبية غلوب مد - سوريا</p>
+	<div style="position:fixed;height:100%;width:100%;    background-color: #000313a1;">
+	</div>
+	</div>
+	<div class="loader" style="z-index:99999"><i class="fa fa-spinner fa-pulse"></i></div>
+	<div class="icon-bar">
+	  <a href="http://www.globemedsyria.com/" class="twitter" data-balloon-pos="left" data-balloon="http://www.globemedsyria.com/"><i class="fa fa-globe"></i></a> 
+	  <a href="https://www.facebook.com/GlobemedSyria/" class="facebook" data-balloon-pos="left" data-balloon="facebook/GlobemedSyria"><i class="fa fa-facebook"></i></a> 
+	  <a href="#" class="google" data-balloon-pos="left" data-balloon="011-9492"><i class="fa fa-phone"></i></a> 
+	</div>
+	<div  style="    background-color: rgba(0, 16, 60, 0.73);height:100%;width:100%;">
+			<ul id="gn-menu" class="gn-menu-main">
+				<li >
+					<a class="gn-icon-menu" style="font-size:20px"><i class="fa fa-search"></i></a>
+					<nav class="gn-menu-wrapper">
+						  <div>
+						  <div id="loading" style="width:20px;height:20px;float: left;display:none;color:#153d6e;"><i class="fa fa-spinner fa-pulse"></i></div>
+
+						<button id="searchBtn" class="search-btn" style="display:none;">بحث <i class="fa fa-search"></i></button>
+						<button id="clear-search" style="position: absolute;margin-top: 7px;color: #153d6e;background: no-repeat;border: 0px;" class="search-btn"> <i class="fa fa-times"></i></button>
+						  <input id="searchText" class="searchMap" placeholder="اكتب كلمة للبحث..." style="text-align:right;direction:rtl;"></input>
+						 
+						<div id="users">
+
+						  <ul  id="data-users" class="list" style="height:600px;overflow-y:scroll;    background-color: #c9c9c991;border-radius:60px 2px 60px 2px;">
+						   
+						 
+						  </ul>
+						</div>
+						  </div>
+					</nav>
+				</li>
+				<li><a id="refresh_data_btn" href="javascript:void(0);" title="تحديث" style="font-size: 20px;line-height: 65px;"><i class="fa fa-refresh"></i></a></li>
+				<li><a data-toggle="modal" data-target="#info_modal"  href="javascript:void(0);" title="حول الشركة" style="font-size: 20px;line-height: 65px;"><i class="fa fa-info-circle"></i></a></li>
+				<li><a class="codrops-icon" id="download_data_btn" href="javascript:void(0);" title="تحميل ملف البيانات" style="font-size: 20px;line-height: 65px;"><i class="fa fa-download"></i></a></li>
+				<li><img id="logo" src="assets/images/Picture3.png" width="70" height="70" title="غلوب ميد سوريا | Globe Med Syria" /></li>
+				<li><a class="codrops-icon logo" href="http://www.globemedsyria.com/"><img id="logo" src="assets/images/logo.png" width="70" height="70" title="غلوب ميد سوريا | Globe Med Syria - FIT" /></a></li>
+
+			</ul>
+			<a href="https://riches-spa.com/GlobeMedData.xml" target="_blank" download id="download" hidden></a>
+	
+		<div id="syria-map" class="cd-product cd-container" style="top:60px;">
+		<div id="image_map" class="cd-product-wrapper" style="left: 0px;float: left;">
+			<img src="assets/images/syria.png" id="img_ID" alt="Preview image">
+			<ul>
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="دير الزور">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="حمص">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="اللاذقية">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="الحسكة">More</a>
+					
+				</li> <!-- .cd-single-point -->
+					<li class="cd-single-point">
+					<a class="cd-img-replace"  href="javascript:void(0);"   data-toggle="modal" data-target="#info_modal">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="القنيطرة">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="درعا" >More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="السويداء">More</a>
+					
+				</li> <!-- .cd-single-point -->
+					<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"  data-toggle="modal" data-target="#CityModal" data-name="ريف دمشق">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"  data-toggle="modal" data-target="#CityModal" data-name="دمشق">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="طرطوس">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="حلب">More</a>
+					
+				</li> <!-- .cd-single-point -->
+					<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="ادلب">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="حماة">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				<li class="cd-single-point">
+					<a class="cd-img-replace" href="javascript:void(0);"   data-toggle="modal" data-target="#CityModal" data-name="الرقة">More</a>
+					
+				</li> <!-- .cd-single-point -->
+
+				
+			</ul>
+		</div> <!-- .cd-product-wrapper -->
+	</div>
+		<img src='assets/images/Picture3.png' style='right: 0px;position: fixed;bottom: 0px;'/>		
+				<div class="modal fade-scale" id="copy_modal" role="dialog" aria-hidden="true" style="z-index:99999;display:none">
+				<div class="modal-dialog  bounceIn  animated" role="document">
+				
+				  <!-- Modal content-->
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title" >نسخ الملف</h4>
+					</div>
+					<div class="modal-body">
+					
+					  <ul class="" >
+				<li data-id="1">
+				  <span class="link name" >
+				   <b>:يرجى نسخ الملف إلى المسار التالي</b>
+				  </span>
+				 
+				</li>
+				
+				<li data-id="1">
+				  <span class="link name" id="file_path_id" >
+				
+				  </span>
+				 
+				</li>
+				
+				
+			  </ul>
+					</div>
+					<div class="modal-footer">
+					
+					  <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق <i class="fa fa-close"></i></button>
+					 
+					</div>
+				  </div>
+				  
+				</div>
+  </div>
+				<div class="modal fade-scale" id="connection_modal" role="dialog" aria-hidden="true" style="z-index:99999;display:none">
+				<div class="modal-dialog  bounceIn  animated" role="document">
+				
+				  <!-- Modal content-->
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title" id="title_id">الإتصال بالإنترنت</h4>
+					</div>
+					<div class="modal-body">
+					
+					  <ul class="" >
+				<li data-id="1">
+				  <span class="link name" >
+				   <b>يرجى التأكد من أنك متصل بالإنترنت ثم معاودة المحاولة لاحقاً</b>
+				  </span>
+				 
+				</li>
+			  </ul>
+					</div>
+					<div class="modal-footer">
+					
+					  <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق <i class="fa fa-close"></i></button>
+					 
+					</div>
+				  </div>
+				  
+				</div>
+			</div>
+				<div class="modal fade-scale" id="welcome_modal" role="dialog" aria-hidden="true" style="z-index:99999;display:none">
+				<div class="modal-dialog  bounceIn  animated" role="document">
+				
+				  <!-- Modal content-->
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title" id="title_id">ترحيب</h4>
+					</div>
+					<div class="modal-body">
+					
+					  <ul class="" >
+				<li data-id="1">
+				  <span class="link name" >
+				   
+				   <b>أهلا بكم في تطبيق الشبكة الطبية المقدّم من قبل شركة غلوب مد - سوريا</b>
+				  </span>
+				 
+				</li>
+				<li data-id="1">
+				  <span class="link name" >
+				   <b>:للإتصال</b>
+				  </span>
+				 <p class="link name" style="direction:rtl;">
+				  <i class="fa fa-phone"></i>
+				  011-2181600
+				  </p>
+				  <p class="link name" style="direction:rtl;">
+				
+				  <i class="fa fa-phone"></i>
+				  011-9492
+				  </p>
+				</li>
+				
+				
+				
+			  </ul>
+					</div>
+					<div class="modal-footer">
+					
+					  <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق <i class="fa fa-close"></i></button>
+					 
+					</div>
+				  </div>
+				  
+				</div>
+  </div>
+  <div class="modal fade" id="info_modal" role="dialog" aria-hidden="true" style="z-index:99999;display:none">
+				<div class="modal-dialog   modal-dialog-centered">
+				
+				  <!-- Modal content-->
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title" id="title_id">غلوب مد -سوريا</h4>
+					</div>
+					<div id="info_print" class="modal-body" style="display: -webkit-box;">
+					
+					  <ul class="" >
+				
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;">
+				   <b><i class="fa fa-android fa-2x"> &nbsp;</i> تطبيقنا على أي جهزة الأندرويد:&nbsp;</b>
+				  </span>
+				 <a class="link name" href="http://goo.gl/8YHcxa" target="_blank" data-balloon="إضغط هنا للتحميل"  data-balloon-pos="left" style="direction:rtl;color:#141f5d;float: right;">
+				  <i class="fa fa-download fa-2x"></i>
+				  </a>
+				  
+				</li>
+			<li>
+			<hr>
+			</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;">
+				   <b><i class="fa fa-apple fa-2x"> &nbsp;</i>تطبيقنا على أجهزة APPLE: &nbsp;</b>
+				  </span>
+				 <a class="link name" href="http://goo.gl/k9Y3x6"  data-balloon="إضغط هنا للتحميل"  data-balloon-pos="left" target="_blank" style="direction:rtl;color:#141f5d;float: right;color:#141f5d">
+				  <i class="fa fa-download fa-2x"></i>
+				  </a>
+				  
+				</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;">
+				   <b> <i class="fa fa-globe fa-2x">&nbsp;</i> الموقع الألكتروني&nbsp;</b>
+				  </span>
+				 <a class="link name" href="http://www.globemedsyria.com/" style="direction:rtl;color:#141f5d;float: right;    line-height: 35px;">
+				 
+				  http://www.globemedsyria.com/
+				  </a>
+				 
+				</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;" >
+				   <b><i class="fa fa-briefcase fa-2x">&nbsp;</i>وظائف&nbsp;</b>
+				  </span>
+				 <a class="link name" href="mailto:HR@globemedsyria.com" style="direction:rtl;color:#141f5d;float: right;    line-height: 35px;">
+				  
+				 HR@globemedsyria.com
+				  </a>
+				 
+				</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;">
+				   <b><i class="fa fa-facebook-square fa-2x"></i>&nbsp;صفحتنا على فيسبوك</b>
+				  </span>
+				 <a class="link name" href="https://www.facebook.com/GlobemedSyria/" style="direction:rtl;color:#141f5d;float: right;    line-height: 35px;">
+				  
+				facebook/GlobemedSyria/
+				  </a>
+				 
+				</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;">
+				   <b><i class="fa fa-address-card-o fa-2x">&nbsp;</i>العنوان&nbsp;</b>
+				  </span>
+				 <span class="link name"  style="direction:rtl;line-height: 35px;">
+				
+				 دمشق، برامكة، مقابل كلية الهندسة المدنية، بناء غلوب ميد سوريا
+				  </span>
+				 
+				</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;" >
+				   <b><i class="fa fa-envelope fa-2x">&nbsp;</i>ص.ب&nbsp;</b>
+				  </span>
+				 <span class="link name"  style="direction:rtl;;float: right;line-height: 35px;">
+				
+				10466
+				  </span>
+				 
+				</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;">
+				   <b> <i class="fa fa-phone fa-2x">&nbsp;</i> هاتف&nbsp;</b>
+				  </span>
+				 <span class="link name"  style="direction:rtl;;float: right;line-height: 35px;">
+				
+				
+				 011-2181600
+				  </span>
+				 
+				</li>
+				<li data-id="1" style="float:right;display:block;width:100%">
+				  <span class="link name" style="direction:rtl;text-align: right;float: right;" >
+				   <b><i class="fa fa-fax fa-2x">&nbsp;</i> فاكس&nbsp;</b>
+				  </span>
+				 <span class="link name"  style="direction:rtl;line-height: 35px;">
+				
+				 
+				 011-2181669
+				  </span>
+				 
+				</li>
+			  </ul>
+					</div>
+					<div class="modal-footer">
+					
+					  <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق <i class="fa fa-close"></i></button>
+					  <a id="printinfobtn" href="javascript:void(0);" class="btn btn-default" >طباعة<i class="fa fa-print"></i></a>
+					</div>
+				  </div>
+				  
+				</div>
+  </div>
+			<div class="modal fade" id="myModal" role="dialog" aria-hidden="true" style="z-index:99999;display:none">
+				<div  class="modal-dialog">
+				
+				  <!-- Modal content-->
+				  <div class="modal-content" style="    background-color: #fffffff5;">
+					<div class="modal-header">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 class="modal-title" id="title_id">معلومات الطبيب </h4>
+					</div>
+					<div  class="modal-body" id="provider-detail" style="display: flex;">
+					
+					  <ul class="list" style="width:100%" >
+				<li data-id="1">
+				  <span class="link name" style="float:right;">
+				   <b style="direction: rtl;float: right;">&nbsp;الاسم:&nbsp;</b>
+				  </span>
+				 <span class="spec modal-fullname" style="float:right;direction: rtl;" data-timestamp="12345"></span>
+				</li>
+				<li data-id="2">
+				  <span  class="link name" style="float:right;"><b style="direction: rtl;float: right;">&nbsp;الإختصاص:</b></span>
+				  <span class="spec modal-specification" style="float:right;direction: rtl;" data-timestamp="23456"></span>
+				</li>
+				<li data-id="3">
+				   <span  class="link name float-right" style="float:right;"><b style="direction: rtl;float: right;">&nbsp;رقم الهاتف:&nbsp;</b> </span>
+				  <span class="spec modal-phone1 float-right"  data-timestamp="23456"></span>
+				</li>
+				
+				<li data-id="6" >
+				  <span  class="link name" style="float:right;"><b style="direction: rtl;float: right;">&nbsp;العنوان&nbsp;</b></span><br/>
+				  <span class="modal-city" style="direction:rtl;float: right;">:المنطقة</span><br/>
+				  <span class="modal-region" style="direction:rtl;float: right;">:المدينة</span><br/>
+				  <span class="spec modal-address" data-timestamp="23456" style="direction:rtl;    float: right;"> </span>
+				  <br/>
+				</li>
+			  </ul>
+					</div>
+					<div class="modal-footer">
+					
+					  <button type="button" class="btn btn-default" data-dismiss="modal">إغلاق <i class="fa fa-close"></i></button>
+					  <a id="printbtn1" class="btn btn-default" style="float:left">طباعة &nbsp;<i class="fa fa-print"></i></a>
+					</div>
+				  </div>
+				  
+				</div>
+  </div>
+  <div class="modal fade" id="CityModal" role="dialog" aria-hidden="true" style=";display:none">
+    <div class="modal-dialog" style="    height: auto;top:0px;width:45%;margin: 54px auto;
+    margin-bottom: 0px;
+    margin-top: 20px;">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style="height: 100%;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="CityModal_title">معلومات الطبيب </h4>
+        </div>
+        <div class="modal-body">
+		<div class="ref_search">
+				<div class="ref_field">
+					<div class="ref_input_provider">
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">طبيب</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">صيدلية</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">مشفى</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">أشعة</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">مختبر</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">عيادة</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">بصريات</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">أسنان</a>
+					<a href="javascript:void(0);" class="provider-btn btn-inline small">معالجة فيزيائية</a>
+				</div>
+				</div>
+			</div>
+			
+			<select class="singleSelect" id="specialization" name="specialization" style="margin-top:5px;border: 1px solid #ccc;border-radius: 5px;box-shadow: 2px 2px 2px #bbb;display:none;padding: 6px;border: 2px;text-align: right;direction: rtl;width: 100%;        background-color: #ffffff9c;font-size:16px;">
+                <option value="default">اختر اختصاص الطبيب</option>
+            </select>
+			<hr style="margin-top: 10px;margin-bottom: 10px;"/>
+			<div class="ref_search">
+				<div class="ref_field">
+					<div class="ref_input">
+				
+					</div>
+				</div>
+			</div>
+		
+			<div id="places" style="height:250px;margin-bottom:5px;">
+				<button class="sort" data-sort="speciality" style="    width: 100px;">
+					الاختصاص 
+				  </button>
+				<button class="sort" data-sort="city" style="width: 90px;">
+					المنطقة 
+				  </button>
+				  <button class="sort" data-sort="name" style="width: 80px;">
+					الاسم
+				  </button>	
+				  <a id="printbtn" href="tel:963 sadfsdfsd" class="btn btn-default" style="float:left;display:none">طباعة &nbsp;<i class="fa fa-print"></i></a>
+				 <label class="sort_label"> :الترتيب حسب </label>
+				  
+						<ul id="data-places" class="list" style="background-color: #ffffff91;max-height: 220px;height: 220px;overflow-y: scroll;width:100%">
+					
+						</ul>
+						
+        </div>
+		</div>
+        <div class="modal-footer">
+        </div>
+      </div>
+      
+    </div>
+  </div>
+		</div><!-- /container -->
+		
+		<script src="assets/js/classie.js"></script>
+		<script src="assets/js/gnmenu.js"></script>
+		  <script src="assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+
+  <link href="assets/css/jsmaps.css" rel="stylesheet" type="text/css" />
+
+
+    <script src="assets/js/jquery-ui.js"></script>
+	 
+	 
+	  <script src="assets/js/list.js"></script>
+
+	 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/jquery.maphilight.js"></script>
+  <script src="assets/js/fastselect.js"></script>
+
+
+<script>
+
+  $( function() {
+    $( "#accordion" ).accordion();
+  } );
+  </script>
+		<script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		
+
+
+    $('#myModal').on('show.bs.modal', function (e) {
+   $('#galleryImage').attr("src",$(e.relatedTarget).data("name"));
+   $('#title_id').text(" تفاصيل "+" "+$(e.relatedTarget).data('name'));
+ $('.modal-phone1').text($(e.relatedTarget).data('phone1'));   
+ $('.modal-city').text("المنطقة: "+$(e.relatedTarget).data('region'));  
+ $('.modal-region').text("المدينة: "+$(e.relatedTarget).data('city'));  
+ 
+  if($('.modal-fax').text()=="") $('.modal-fax').closest('li').hide();
+ $('.modal-address').text('الشارع: '+$(e.relatedTarget).data('street')+'- البناء: '+$(e.relatedTarget).data('building')); 
+ 
+ $('.modal-specification').text($(e.relatedTarget).data('spec'));  
+ if($('.smodal-pecification').text()=="") $('.modal-specification').closest('li').hide();
+
+ var ph=$(e.relatedTarget).data('phone1')+"";
+
+ var phone=(ph.split("-").length >0)?ph.split("-")[0]: ph;
+ $('.modal-fullname').text($(e.relatedTarget).data('name'));  
+ 
+});
+
+		</script>
+		<script>
+
+var cities={};
+var search_items=[];
+var providersList=[];
+var selected_city="";
+	var options = {
+  valueNames: [     'name',
+					
+    { data: ['id'] },
+    { name: 'name1', attr: 'data-name' },
+	{ name: 'type', attr: 'data-type' },
+	{ name: 'spec', attr: 'data-spec' },
+	{ name: 'phone1', attr: 'data-phone1' },
+	{ name: 'street', attr: 'data-street' },
+	{ name: 'region', attr: 'data-region' },
+	{ name: 'city', attr: 'data-city' },
+    { name: 'building', attr: 'data-building' }]
+	,
+  item: '<li data-id=""><a class="link name name1 type spec phone1 city region street building" href="#myModal"  data-toggle="modal" data-type="" data-name="" data-spec="" data-phone1=""  data-city="" data-region="" data-street="" data-building=""></a></li>'
+
+};
+var options1 = {
+  valueNames: [     'name',
+					'speciality',
+					'cityy',
+   
+    { data: ['id'] },
+    { name: 'name1', attr: 'data-name' },
+	{ name: 'type', attr: 'data-type' },
+	{ name: 'spec', attr: 'data-spec' },
+	{ name: 'phone1', attr: 'data-phone1' },
+	
+	{ name: 'street', attr: 'data-street' },
+	{ name: 'region', attr: 'data-region' },
+	{ name: 'city', attr: 'data-city' },
+    { name: 'building', attr: 'data-building' }]
+	,
+	
+  item: '<li data-id=""><a class="link name name1 type phone1 spec city region street building" href="#myModal"  data-toggle="modal" data-type="" data-name="" data-spec="" data-phone1="" data-fax=""  data-email="" data-city="" data-region="" data-street="" data-building="" style="width:100%;float: right;direction:rtl"></a><p class="speciality" style="float: right;"></p><p class="cityy" style="left:0;text-align:left"></p></li>'
+   
+};
+
+var usersList = new List('users', options1);
+var placesList = new List('places', options1);
+
+function checkconnection() {
+var status = navigator.onLine;
+if (status) {
+//alert("You are Online");
+ var pageURL = $(location). attr("href"); 
+	var url=pageURL.substring(0, pageURL.lastIndexOf('/') + 1)+"data";
+   var a = document.createElement("a");
+  a.download = "GlobeMedData.json";
+  a.setAttribute('href', 'data:text/plain;charset=utf-8,' + ("https://riches-spa.com/GlobeMedData.xml"))
+  
+  document.body.appendChild(a);
+  a.click();
+  $("#file_path_id").text(url);
+ 
+  setTimeout(function(){
+	$("#copy_modal").modal("show");
+}, 1000);
+  
+} else {
+$("#connection_modal").modal("show");
+}
+}
+$('#download_data_btn').click(function (e) {
+	checkconnection();
+  });
+  
+  $('#refresh_data_btn').click(function (e) {
+		e.preventDefault();
+		 location.reload(true);
+
+  });
+
+$.fn.enterKey = function (fnc) {
+    return this.each(function () {
+        $(this).keypress(function (ev) {
+            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+            if (keycode == '13') {
+                fnc.call(this, ev);
+            }
+        })
+    })
+}
+	function PrintPage(html)
+{
+   var sOption="toolbar=yes,location=no,directories=yes,menubar=yes,scrollbars=yes,width=900,height=300,left=100,top=25";
+ 
+   var winprint=window.open("","",sOption);
+       winprint.document.open();
+       winprint.document.write('<html lang="en" class="no-js"><head><meta charset="UTF-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1.0">');
+       winprint.document.write('<link rel="stylesheet" href="assets/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="assets/css/component.css" /><link href="assets/css/font-awesome.min.css" rel="stylesheet"><link href="assets/css/reset.min.css" rel="stylesheet" type="text/css" /><link rel="stylesheet" href="assets/css/jquery-ui.css"><link rel="stylesheet" href="assets/css/baloon.css" /><link rel="stylesheet" href="assets/css/style.css" /><link rel="stylesheet" href="assets/css/main.css" />');
+	  
+       winprint.document.write('</head><body onload="window.print();" style="text-align:right">');
+	   winprint.document.write('<ul id="gn-menu" class="gn-menu-main" style="position:relative;display:block;"><li><p style="display:block;    line-height: 30px;margin-left: 15px;margin-right: 15px;text-align: center;"> الشبكة الطبية <br/> غلوب مد سوريا</p></li><li style="width:150px"><img id="logo" src="assets/images/logo-globe.png" width="70" height="70" title="غلوب ميد سوريا | Globe Med Syria"></li></ul>');
+       winprint.document.write(html);
+	  
+	   winprint.document.write('</body></html>');
+       winprint.document.close();
+       winprint.focus();
+}
+    $(document).ready(function() {
+	$("#printbtn").click(function(e){
+	e.preventDefault();
+	var html='<ul class="list" style="background-color: #ffffff91;width:100%">';
+	$("#data-places > li").each(function(key,value){
+	html+='<li data-id="'+key+'" style="border:1px solid gray">'+$(this).html()+'</li>';
+	
+	});
+	 html+="</ul>";
+	PrintPage(html);
+	
+	});
+	$("#printbtn1").click(function(e){
+	e.preventDefault();
+	PrintPage($("#provider-detail").html());
+	
+	});
+	$("#printinfobtn").click(function(e){
+	e.preventDefault();
+	PrintPage($("#info_print").html());
+	
+	});
+	$("body").prepend('<div class="lds-ripple" style="position:relative;top:30%;right:50%"><div></div><div></div></div>');
+	$(".sort").hide();
+	$("#printbtn").hide();
+	 $(".loader").hide();
+	$(".sort_label").hide();
+	$('.ref_input_provider').html("");
+
+    $.each( providers, function(key,value ) {
+					
+				
+					$('.ref_input_provider').append('<a href="javascript:void(0);" class="provider-btn btn-inline small" data-value="'+key+'">'+value+'</a>');
+  
+	}); 
+	
+	$.each( specialities, function(key,value ) {
+					var newOption = new Option(value, value, false, false);
+				
+					$('#specialization').append(newOption);
+  
+	});
+	$('[shape="circle"]').click(function(e){
+	e.preventDefault();
+	
+	
+	});
+	$("#searchText").enterKey(function () {
+    $( "#searchBtn" ).trigger( "click" );
+})
+	$("#dynamicClassChange").click(function() {
+		$(this).attr("data-hover-class","hover-green");
+	});
+	$(window).load(function(){
+	setTimeout(function(){ $('.spinner-container').fadeOut('slow'); }, 2000);
+	
+});
+	$(".lds-ripple").hide();
+
+var xml_content;
+
+	clicked = true;
+
+		
+$("#search_dialogue_button").on('click', function(){
+ placesList.clear();
+
+ 
+ $('.sort').removeClass("asc");
+ $('.sort').removeClass("dsc");
+ $("#data-places").append('<div class="lds-ripple" style="position:relative;top:30%;right:50%"><div></div><div></div></div>');
+ $("#search_dialogue_button").html('جاري البحث <i class="fa fa-spinner fa-pulse" >&nbsp;</i>')
+ //search_items.length=0;
+
+ //$('.ref_input_provider > a.active').each(function () { 
+  //    search_items.push($(this).text());
+ //});
+		
+var index=1;
+var html="";
+var region=$(".ref_input").find("a.active").html();
+
+if(selected_city!="")
+{
+
+   $(globe_data).each(function(key,value){
+  
+
+      var NAME = $.trim(value['NAME']);
+	  var REGION_TERR = $.trim(value['REGION_TERR']);
+      var CITY = $.trim(value['CITY']);
+	  var STREET = $.trim(value['STREET']);
+	  var BUILDING = $.trim(value['BUILDING']);
+	  var TEL1 = $.trim(value['TEL']);
+
+	  var PROVIDER_TYPE = $.trim(value['PROVIDER_TYPE']);
+	  var SPECIALITY ='' ;
+	  if(value['SPECIALITY']==null || value['SPECIALITY']=="")
+		SPECIALITY ='' ;
+	  else SPECIALITY =$.trim(value['SPECIALITY']) ;
+	  var DIVISION=$.trim(value['DIVISION']);
+	
+	  
+	 if(selected_city==REGION_TERR)
+{	 
+	 if($(".ref_input").find("a").hasClass("active"))
+	 {
+	 if(DIVISION==region)
+	  {
+	 
+	  if(search_items.length>0)
+	  {
+		
+		if(jQuery.inArray(PROVIDER_TYPE, search_items) != -1)
+		{
+		if($("#specialization").find("option:selected").val()!="default")
+		{
+		if(PROVIDER_TYPE=="طبيب")
+		{
+		if(SPECIALITY==$("#specialization").find("option:selected").val())
+			placesList.add(
+		 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		 }
+		 else{
+		 placesList.add(
+		 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1}
+		 );
+		 }
+		 }
+		 else{
+		 if(PROVIDER_TYPE=="طبيب")
+		{
+		placesList.add(
+		 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		}
+		else
+			placesList.add(
+		 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		 }
+		}
+		
+	  }
+	  else{
+	  if(PROVIDER_TYPE=="طبيب")
+		{
+		placesList.add(
+		 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		}
+		else
+			placesList.add(
+		 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+	  }
+		 
+				
+			index++;
+	  }
+	  }
+	  else{
+			if(search_items.length>0)
+	  {
+		
+		if(jQuery.inArray(PROVIDER_TYPE, search_items) != -1)
+		{
+		if($("#specialization").find("option:selected").val()!="default")
+		{
+		if(PROVIDER_TYPE=="طبيب")
+		{
+		if(SPECIALITY==$("#specialization").find("option:selected").val())
+			placesList.add(
+		 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		 }
+		 else{
+		 placesList.add(
+		 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		 }
+		 }
+		 else{
+		 if(PROVIDER_TYPE=="طبيب")
+		{
+		placesList.add(
+		 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		}
+		else
+			placesList.add(
+		 { name: NAME,name1: NAME,id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		 }
+		}
+		
+	  }
+	  else{
+	  if(PROVIDER_TYPE=="طبيب")
+		{
+		placesList.add(
+		 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		}
+		else
+			placesList.add(
+		 { name: NAME,name1: NAME,id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+	  }
+		 
+				
+			index++;
+	  }
+	  }
+	  
+    });
+	}
+	
+	if(placesList.size()==0)
+	{
+	
+	placesList.clear();
+	$("#search_dialogue_button").html('ابدأ البحث <i class="fa fa-search" >&nbsp;</i>');
+	$("#data-places").append('<p style="font-size: 20px;">لاتوجد نتائج</p>');
+	$(".sort").hide();
+	$("#printbtn").hide();
+	$(".sort_label").hide();
+	$(".sort").removeClass("asc");
+  $(".sort").removeClass("dsc");
+	
+	}
+	else{
+	$(".sort").show();
+	$("#printbtn").show();
+	$(".sort_label").show();
+	 $("#search_dialogue_button").html('ابدأ البحث <i class="fa fa-search" >&nbsp;</i>');
+	}
+		
+    });
+	$("#clear-search").on('click', function(){
+	$("#searchText").val("");
+	usersList.clear();
+	$(".gn-menu-wrapper").animate({height:60},200);
+ $("#data-users").removeClass("shown");
+	});
+$("#searchBtn").on('click', function(){
+$(".spinner").show();
+ 
+usersList.clear();
+ 
+ 
+ 
+
+ $("#data-users").append('<div class="lds-ripple" style="position:absolute;top:40%;"><div></div><div></div></div>');
+ 
+var index=1;
+var html="";
+
+  $(globe_data).each(function(key,value){
+
+      var NAME = $.trim(value['NAME']);
+	  var REGION_TERR = $.trim(value['REGION_TERR']);
+      var CITY = $.trim(value['CITY']);
+	  var STREET = $.trim(value['STREET']);
+	  var BUILDING = $.trim(value['BUILDING']);
+	  var TEL1 = $.trim(value['TEL']);
+	
+	  var PROVIDER_TYPE = $.trim(value['PROVIDER_TYPE']);
+	    var SPECIALITY ='' ;
+	  if(value['SPECIALITY']==null || value['SPECIALITY']=="")
+	  SPECIALITY ='' ;
+	  else SPECIALITY =$.trim(value['SPECIALITY']);
+	
+	 
+	  if(NAME.indexOf($("#searchText").val()) !=-1 || REGION_TERR.indexOf($("#searchText").val()) !=-1 || CITY.indexOf($("#searchText").val()) !=-1 || PROVIDER_TYPE.indexOf($("#searchText").val()) !=-1 || SPECIALITY.indexOf($("#searchText").val()) !=-1)
+	  {
+		if(SPECIALITY=="" || SPECIALITY==null)
+		{
+		 usersList.add(
+		 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		 }
+		 else{
+		 
+		 usersList.add(
+		 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,speciality:"اختصاص "+SPECIALITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+		 );
+		 }
+				
+			index++;
+	  }
+	  
+    });
+
+	
+	if(usersList.size()==0)
+	{
+	
+	usersList.clear();
+	$(".gn-menu-wrapper").animate({height:60},1000);
+		$("#data-users").removeClass("shown");
+	$("#data-users").append('<p style="font-size: 20px;">لاتوجد نتائج</p>')
+	}
+	else{
+		$(".gn-menu-wrapper").animate({height:$( window ).height()-60},1000);
+		$("#data-users").hasClass("shown");
+	}
+	
+		$(".spinner").hide();
+    });
+     
+ $("#syria-map").css("height",$( window ).height()-66);
+ $("#image_map").css("height",$( window ).height()-66);
+ $("#image_map > img").css("height",$( window ).height()-70);
+
+
+   
+});
+
+    $('#myModal').on('show.bs.modal', function (e) {
+	
+			$('#myModal .modal-title').text($(e.relatedTarget).data('name'));   
+			 $('.modal-phone1').text($(e.relatedTarget).data('phone1'));    
+			 $('.modal-city').text("المدينة: "+$(e.relatedTarget).data('region'));  
+			 $('.modal-region').text("المنطقة: "+$(e.relatedTarget).data('city')); 
+			 if($(e.relatedTarget).data('building')=="")
+			 $('.modal-address').text('الشارع: '+$(e.relatedTarget).data('street')); 
+			 else
+			 $('.modal-address').text('الشارع: '+$(e.relatedTarget).data('street')+'- البناء: '+$(e.relatedTarget).data('building')); 
+			 
+			 $('.modal-specification').text($(e.relatedTarget).data('spec'));  
+			 if($(e.relatedTarget).data('spec')=="") $('.modal-specification').closest('li').hide();
+			 else $('.modal-specification').closest('li').show();
+
+			 var ph=$(e.relatedTarget).data('phone1')+"";
+
+			 var phone=(ph.split("-").length >0)?ph.split("-")[0]: ph;
+			 $('.modal-fullname').text($(e.relatedTarget).data('name'));  
+			 
+});
+
+
+
+ $('#CityModal').on('show.bs.modal', function (e) {
+	 search_items.length = 0;
+	 $("#data-places").html("");
+	 $("#specialization").hide();
+	 $('.sort').hide();
+	 $("#printbtn").hide();
+	 $('.sort_label').hide();
+	  $(".sort").removeClass("asc");
+	  $(".sort").removeClass("dsc");
+	 $("#specialization").val("default");
+
+     $('#galleryImage').attr("src",$(e.relatedTarget).data("name"));
+     $('#CityModal_title').text(" محافظة: "+" "+$(e.relatedTarget).data('name'));
+     selected_city=$(e.relatedTarget).data('name');
+     $('.ref_input').html("");
+	 $('.ref_input_provider a').removeClass("active");
+	 
+  if(cities_sub[$(e.relatedTarget).data('name')].length!=0)
+  {
+			  $('.ref_search').show();
+			  //  $.each( cities_sub[$(e.relatedTarget).data('name')], function(key,value ) {
+
+			$.each( regions_sub[$(e.relatedTarget).data('name')], function(k,v ) {
+			for (var prop in v) {
+			   // alert(prop + " is " + v[prop]);
+				$('.ref_input').append('<a href="javascript:void(0);" class="site-btn btn-inline small" data-balloon-pos="down" data-balloon="تتضمن مايلي: '+v[prop]+'" >'+prop+'</a>');
+			}
+			//if(v.name==value)
+			//$('.ref_input').append('<a href="javascript:void(0);" class="site-btn btn-inline small" title="تتضمن مايلي: '+v.childs+'" >'+$.trim(value)+'</a>');
+				
+				
+				});
+				
+				//$('.ref_input').append('<a href="javascript:void(0);" class="site-btn btn-inline small" >'+$.trim(this)+'</a>');
+				
+			  
+				//}); 
+	}
+	else{
+	$('.ref_search').hide();
+	}
+	$('#specialization').change(function(){
+						$("#data-places").html("");
+						$("#data-places").append('<div class="lds-ripple" style="position:relative;top:30%;right:40%"><div></div><div></div></div>');
+						setTimeout(function(){
+							LoadData();
+						}, 1000);
+					})
+						$(".site-btn").click(function(e){
+
+						e.preventDefault();
+						if($(this).hasClass('active'))
+						{
+						  $(this).removeClass("active");
+						}
+						else
+						{
+						$(".site-btn").removeClass("active");
+						$(this).addClass("active");
+						}
+						$("#data-places").html("");
+						$("#data-places").append('<div class="lds-ripple" style="position:relative;top:30%;right:40%"><div></div><div></div></div>');
+						 setTimeout(function(){
+							LoadData();
+						}, 1000);
+					});
+					 $('.modal-phone1').text($(e.relatedTarget).data('phone1'));     
+					 $('.modal-city').text("المدينة: "+$(e.relatedTarget).data('region'));  
+					 $('.modal-region').text("المنطقة: "+$(e.relatedTarget).data('city'));  
+					 $('.modal-address').text('الشارع: '+$(e.relatedTarget).data('street')+'- البناء: '+$(e.relatedTarget).data('building')); 
+					 
+					 $('.modal-specification').text($(e.relatedTarget).data('spec'));  
+
+				 var ph=$(e.relatedTarget).data('phone1')+"";
+
+				 var phone=(ph.split("-").length >0)?ph.split("-")[0]: ph;
+				 $('.modal-fullname').text($(e.relatedTarget).data('name'));  
+				
+});
+    $(document).ready(function() {
+				
+					$(".provider-btn").click(function(e){
+
+					e.preventDefault();
+					if($(this).hasClass('active'))
+					{
+						$(this).removeClass("active");
+						if($(this).text()=="طبيب")
+						{
+						$("#specialization").hide();
+						
+						$("[data-sort='speciality']").hide();
+						}
+						
+						var index=search_items.indexOf($(this).attr("data-value"));
+						 search_items.splice(index, 1);
+						$("#data-places").html("");
+						$("#data-places").append('<div class="lds-ripple" style="position:relative;top:30%;right:40%"><div></div><div></div></div>');
+						
+						setTimeout(function(){
+					
+						 LoadData();
+						}, 1000);
+						
+						if($(this).text()=="طبيب")
+						{
+						$("[data-sort='speciality']").hide();
+						}
+						if(!($(".provider-btn").hasClass('active')) && search_items.length==0)
+							$("[data-sort='speciality']").show();
+						
+					}
+					else
+					{
+						$(this).addClass("active");
+						if($(this).text()=="طبيب")
+						{
+						$("#specialization").show();
+						$("[data-sort='speciality']").show();
+						}
+						search_items.push($(this).attr("data-value"));
+				    	
+						setTimeout(function(){
+						$("#data-places").html("");
+						$("#data-places").append('<div class="lds-ripple" style="position:relative;top:30%;right:40%"><div></div><div></div></div>');
+						
+							setTimeout(function() {
+						 LoadData();
+						 }, 1000);
+						 
+						if(!($(".provider-btn").hasClass('active')) && search_items.length==0)
+						{
+						$("[data-sort='speciality']").show();
+						
+						}	
+						}, 500);
+						
+							
+						
+					}
+					
+					
+					});
+					setTimeout(function() {
+					 
+						$("#welcome_modal").modal("show");
+					}, 4000);
+					$('#welcome_modal').on('show.bs.modal', function (e) {
+					
+					 $('#welcome_modal .modal-dialog').attr('class', 'modal-dialog  bounceIn  animated');
+					});
+					
+					});
+					function LoadData()
+					{
+					
+					    
+						 placesList.clear();
+						 $('.sort').removeClass("asc");
+						 $('.sort').removeClass("dsc");
+						 
+						 $("#search_dialogue_button").html('جاري البحث <i class="fa fa-spinner fa-pulse" >&nbsp;</i>')
+
+								
+						var index=1;
+						var html="";
+						var region=$(".ref_input").find("a.active").html();
+
+						if(selected_city!="")
+						{
+
+						   $(globe_data).each(function(key,value){
+						  
+
+							  var NAME = $.trim(value['NAME']);
+							  var REGION_TERR = $.trim(value['REGION_TERR']);
+							  var CITY = $.trim(value['CITY']);
+							  var STREET = $.trim(value['STREET']);
+							  var BUILDING = $.trim(value['BUILDING']);
+							  var TEL1 = $.trim(value['TEL']);
+
+							  var PROVIDER_TYPE = $.trim(value['PROVIDER_TYPE']);
+							  var SPECIALITY ='' ;
+							  if(value['SPECIALITY']==null || value['SPECIALITY']=="")
+								SPECIALITY ='' ;
+							  else SPECIALITY =$.trim(value['SPECIALITY']) ;
+							  var DIVISION=$.trim(value['DIVISION']);
+							
+							  
+							 if(selected_city==REGION_TERR)
+						{	 
+							 if($(".ref_input").find("a").hasClass("active"))
+							 {
+							 if(DIVISION==region)
+							  {
+							 
+							  if(search_items.length>0)
+							  {
+								
+								if(jQuery.inArray(PROVIDER_TYPE, search_items) != -1)
+								{
+								if($("#specialization").find("option:selected").val()!="default")
+								{
+								if(PROVIDER_TYPE=="طبيب")
+								{
+								if(SPECIALITY==$("#specialization").find("option:selected").val())
+									placesList.add(
+								 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								 }
+								 else{
+								 placesList.add(
+								 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1}
+								 );
+								 }
+								 }
+								 else{
+								 if(PROVIDER_TYPE=="طبيب")
+								{
+								placesList.add(
+								 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								}
+								else
+									placesList.add(
+								 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								 }
+								}
+								
+							  }
+							  else{
+							  if(PROVIDER_TYPE=="طبيب")
+								{
+								placesList.add(
+								 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								}
+								else
+									placesList.add(
+								 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+							  }
+								 
+										
+									index++;
+							  }
+							  }
+							  else{
+									if(search_items.length>0)
+							  {
+								
+								if(jQuery.inArray(PROVIDER_TYPE, search_items) != -1)
+								{
+								if($("#specialization").find("option:selected").val()!="default")
+								{
+								if(PROVIDER_TYPE=="طبيب")
+								{
+								if(SPECIALITY==$("#specialization").find("option:selected").val())
+									placesList.add(
+								 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								 }
+								 else{
+								 placesList.add(
+								 { name: NAME,name1: NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								 }
+								 }
+								 else{
+								 if(PROVIDER_TYPE=="طبيب")
+								{
+								placesList.add(
+								 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								}
+								else
+									placesList.add(
+								 { name: NAME,name1: NAME,id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								 }
+								}
+								
+							  }
+							  else{
+							  if(PROVIDER_TYPE=="طبيب")
+								{
+								placesList.add(
+								 { name: 'د.'+NAME,name1: 'د.'+NAME, id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,speciality:"اختصاص "+SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+								}
+								else
+									placesList.add(
+								 { name: NAME,name1: NAME,id:index, type:PROVIDER_TYPE,region:REGION_TERR,city:CITY,cityy:CITY,spec:SPECIALITY,street:STREET,building:BUILDING,phone1:TEL1 }
+								 );
+							  }
+								 
+										
+									index++;
+							  }
+							  }
+							  
+							});
+							}
+	
+	if(placesList.size()==0)
+	{
+	
+	placesList.clear();
+	$("#search_dialogue_button").html('ابدأ البحث <i class="fa fa-search" >&nbsp;</i>');
+	$("#data-places").append('<p style="font-size: 20px;">لاتوجد نتائج</p>');
+	$(".sort").hide();
+	$("#printbtn").hide();
+	$(".sort_label").hide();
+	$(".sort").removeClass("asc");
+  $(".sort").removeClass("dsc");
+	
+	}
+	else{
+	$("[data-sort='name']").show();
+	$("[data-sort='city']").show();
+	$(".sort_label").show();
+	$("#printbtn").show();
+	$(".sort").removeClass("asc");
+    $(".sort").removeClass("dsc");
+	 $("#search_dialogue_button").html('ابدأ البحث <i class="fa fa-search" >&nbsp;</i>');
+	}
+	 $(".loader").hide();
+}
+</script>
+    <script>$(function() {
+        $('#img_ID').maphilight({
+            fillColor: '008800'
+        });
+		});
+       </script>
+	 
+	</body>
+</html>
